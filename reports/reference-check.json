@@ -1,0 +1,458 @@
+{
+  "created_at_utc": "2026-11-04T15:55:35.725929+00:00",
+  "dataset_sha256": "2bb7787cd86254cbeeb678193f72f22674d90c1ce89d31f303269b9acdae3778",
+  "mode": "reference_check",
+  "notice": "Reference execution only. No language model tested; this is not agent accuracy.",
+  "results": [
+    {
+      "id": 1,
+      "question": "How many portfolios do we have in total?",
+      "columns": [
+        "COUNT(*)"
+      ],
+      "rows": [
+        [
+          13
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "question": "What are the names of all active portfolios?",
+      "columns": [
+        "portfolio_name"
+      ],
+      "rows": [
+        [
+          "Growth Equity Fund"
+        ],
+        [
+          "Conservative Income Fund"
+        ],
+        [
+          "Tech Innovation Fund"
+        ],
+        [
+          "Balanced Portfolio"
+        ],
+        [
+          "ESG Sustainable Fund"
+        ],
+        [
+          "Small Cap Value Fund"
+        ],
+        [
+          "International Equity Fund"
+        ],
+        [
+          "Fixed Income Plus"
+        ],
+        [
+          "Dividend Aristocrats Fund"
+        ],
+        [
+          "Emerging Markets Fund"
+        ]
+      ]
+    },
+    {
+      "id": 3,
+      "question": "Which securities are in the Technology sector?",
+      "columns": [
+        "symbol",
+        "company_name"
+      ],
+      "rows": [
+        [
+          "AAPL",
+          "Apple Inc."
+        ],
+        [
+          "MSFT",
+          "Microsoft Corporation"
+        ],
+        [
+          "GOOGL",
+          "Alphabet Inc."
+        ],
+        [
+          "META",
+          "Meta Platforms Inc."
+        ],
+        [
+          "NVDA",
+          "NVIDIA Corporation"
+        ],
+        [
+          "AVGO",
+          "Broadcom Inc."
+        ],
+        [
+          "CRM",
+          "Salesforce Inc."
+        ],
+        [
+          "ORCL",
+          "Oracle Corporation"
+        ]
+      ]
+    },
+    {
+      "id": 4,
+      "question": "What is the total Assets Under Management (AUM) for portfolios with high target risk level?",
+      "columns": [
+        "SUM(total_aum)"
+      ],
+      "rows": [
+        [
+          85000000.0
+        ]
+      ]
+    },
+    {
+      "id": 5,
+      "question": "Show me the top 5 holdings by cost basis in the Growth Equity Fund",
+      "columns": [
+        "holding_id",
+        "symbol",
+        "company_name",
+        "quantity",
+        "cost_basis"
+      ],
+      "rows": [
+        [
+          1,
+          "AAPL",
+          "Apple Inc.",
+          2500.0,
+          438000.0
+        ],
+        [
+          8,
+          "AMZN",
+          "Amazon.com Inc.",
+          100.0,
+          320000.0
+        ],
+        [
+          2,
+          "MSFT",
+          "Microsoft Corporation",
+          800.0,
+          304400.0
+        ],
+        [
+          3,
+          "NVDA",
+          "NVIDIA Corporation",
+          400.0,
+          288040.0
+        ],
+        [
+          6,
+          "CRM",
+          "Salesforce Inc.",
+          1000.0,
+          185400.0
+        ]
+      ]
+    },
+    {
+      "id": 6,
+      "question": "What is the average current price of securities in each sector?",
+      "columns": [
+        "sector_name",
+        "avg_price"
+      ],
+      "rows": [
+        [
+          "Consumer Discretionary",
+          3380.0
+        ],
+        [
+          "Technology",
+          719.245
+        ],
+        [
+          "Healthcare",
+          285.17
+        ],
+        [
+          "Automotive",
+          248.5
+        ],
+        [
+          "Financials",
+          201.2125
+        ],
+        [
+          "Consumer Staples",
+          173.8625
+        ],
+        [
+          "Energy",
+          128.575
+        ]
+      ]
+    },
+    {
+      "id": 7,
+      "question": "For each portfolio, show the total value of Technology sector holdings and what percentage it represents of the total portfolio value",
+      "columns": [
+        "portfolio_name",
+        "tech_value",
+        "total_value",
+        "tech_percentage"
+      ],
+      "rows": [
+        [
+          "Tech Innovation Fund",
+          1565292.5,
+          1565292.5,
+          100.0
+        ],
+        [
+          "Growth Equity Fund",
+          1866148.0,
+          2204148.0,
+          84.67
+        ],
+        [
+          "Total International Index Fund",
+          1427086.0,
+          2281686.0,
+          62.55
+        ],
+        [
+          "International Equity Fund",
+          346888.0,
+          734928.0,
+          47.2
+        ],
+        [
+          "Total Stock Market Index Fund",
+          3093520.0,
+          6622340.0,
+          46.71
+        ],
+        [
+          "Balanced Portfolio",
+          388704.0,
+          1073279.0,
+          36.22
+        ],
+        [
+          "Emerging Markets Fund",
+          339095.0,
+          1045100.0,
+          32.45
+        ],
+        [
+          "ESG Sustainable Fund",
+          272978.0,
+          1007228.0,
+          27.1
+        ]
+      ]
+    },
+    {
+      "id": 8,
+      "question": "Find portfolios that have holdings in more than 5 different sectors and show their diversification metrics",
+      "columns": [
+        "portfolio_name",
+        "sector_count",
+        "total_holdings",
+        "diversification_ratio"
+      ],
+      "rows": [
+        [
+          "Total Stock Market Index Fund",
+          6,
+          12,
+          0.5
+        ]
+      ]
+    },
+    {
+      "id": 9,
+      "question": "What are the sector exposures for the Tech Innovation Fund?",
+      "columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "rows": [
+        [
+          "Technology",
+          100.0
+        ]
+      ]
+    },
+    {
+      "id": 10,
+      "question": "Calculate the sector exposure breakdown for international equity",
+      "columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "rows": [
+        [
+          "Technology",
+          36.0
+        ],
+        [
+          "Automotive",
+          15.0
+        ],
+        [
+          "Energy",
+          38.0
+        ],
+        [
+          "Consumer Staples",
+          11.0
+        ]
+      ]
+    },
+    {
+      "id": 101,
+      "question": "How many funds are marked Passive?",
+      "columns": [
+        "COUNT(*)"
+      ],
+      "rows": [
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": 102,
+      "question": "List portfolio names with AUM above 30 million, from highest AUM to lowest.",
+      "columns": [
+        "portfolio_name"
+      ],
+      "rows": [
+        [
+          "Total Stock Market Index Fund"
+        ],
+        [
+          "Fixed Income Plus"
+        ],
+        [
+          "Tech Innovation Fund"
+        ]
+      ]
+    },
+    {
+      "id": 103,
+      "question": "Break down the balanced portfolio by stock sector using its supplied portfolio weights.",
+      "columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "rows": [
+        [
+          "Technology",
+          22.0
+        ],
+        [
+          "Financials",
+          8.0
+        ],
+        [
+          "Healthcare",
+          6.0
+        ]
+      ]
+    },
+    {
+      "id": 104,
+      "question": "What is the sector exposure of Fixed Income Plus?",
+      "columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "rows": []
+    },
+    {
+      "id": 105,
+      "question": "Show sector allocations for Total Stock Market Index Fund.",
+      "columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "rows": [
+        [
+          "Technology",
+          48.0
+        ],
+        [
+          "Consumer Discretionary",
+          10.0
+        ],
+        [
+          "Automotive",
+          6.0
+        ],
+        [
+          "Financials",
+          14.000000000000002
+        ],
+        [
+          "Healthcare",
+          16.0
+        ],
+        [
+          "Consumer Staples",
+          4.0
+        ]
+      ]
+    },
+    {
+      "id": 106,
+      "question": "How many securities are bonds?",
+      "columns": [
+        "COUNT(*)"
+      ],
+      "rows": [
+        [
+          5
+        ]
+      ]
+    },
+    {
+      "id": 107,
+      "question": "List the names of portfolios whose recorded AUM exceeds one billion.",
+      "columns": [
+        "portfolio_name"
+      ],
+      "rows": []
+    },
+    {
+      "id": 108,
+      "question": "How is international equity distributed across sectors?",
+      "columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "rows": [
+        [
+          "Technology",
+          36.0
+        ],
+        [
+          "Automotive",
+          15.0
+        ],
+        [
+          "Energy",
+          38.0
+        ],
+        [
+          "Consumer Staples",
+          11.0
+        ]
+      ]
+    }
+  ]
+}

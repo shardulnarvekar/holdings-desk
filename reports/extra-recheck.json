@@ -1,0 +1,156 @@
+{
+  "created_at_utc": "2026-11-04T14:00:33.941444+00:00",
+  "dataset_sha256": "2bb7787cd86254cbeeb678193f72f22674d90c1ce89d31f303269b9acdae3778",
+  "mode": "live_gemini",
+  "model": "gemini-3.5-flash-lite",
+  "results": [
+    {
+      "id": 107,
+      "question": "List the names of portfolios whose recorded AUM exceeds one billion.",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "portfolio_name"
+      ],
+      "expected_rows": [],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "List the names of portfolios whose recorded AUM exceeds one billion.",
+        "status": "ok",
+        "message": "No matching records were found in the supplied dataset.",
+        "tool": "sql_query",
+        "columns": [
+          "portfolio_name"
+        ],
+        "rows": [],
+        "evidence": {
+          "sql": "SELECT portfolio_name FROM portfolios WHERE total_aum > 1000000000",
+          "parameters": {},
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 48359.35,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 108,
+      "question": "How is international equity distributed across sectors?",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "expected_rows": [
+        [
+          "Technology",
+          36.0
+        ],
+        [
+          "Automotive",
+          15.0
+        ],
+        [
+          "Energy",
+          38.0
+        ],
+        [
+          "Consumer Staples",
+          11.0
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "How is international equity distributed across sectors?",
+        "status": "ok",
+        "message": "International Equity Fund: Energy is the largest sector at 38% of the supplied portfolio weights.",
+        "tool": "exposure_calculator",
+        "columns": [
+          "sector",
+          "exposure_pct"
+        ],
+        "rows": [
+          [
+            "Energy",
+            38.0
+          ],
+          [
+            "Technology",
+            36.0
+          ],
+          [
+            "Automotive",
+            15.0
+          ],
+          [
+            "Consumer Staples",
+            11.0
+          ]
+        ],
+        "evidence": {
+          "portfolio_name": "International Equity Fund",
+          "basis": "portfolio",
+          "columns": [
+            "sector",
+            "exposure_pct"
+          ],
+          "rows": [
+            [
+              "Energy",
+              38.0
+            ],
+            [
+              "Technology",
+              36.0
+            ],
+            [
+              "Automotive",
+              15.0
+            ],
+            [
+              "Consumer Staples",
+              11.0
+            ]
+          ],
+          "equity_weight_pct": 100.0,
+          "excluded_bond_weight_pct": 0.0,
+          "total_weight_pct": 100.0,
+          "warnings": [],
+          "formula": "100 \u00d7 sum(stock current_weight in sector)"
+        },
+        "warnings": [],
+        "elapsed_ms": 47748.17,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    }
+  ],
+  "passed": 2,
+  "total": 2,
+  "accuracy": 1.0,
+  "tool_accuracy": 1.0,
+  "provider_failures": 0,
+  "skipped": 0,
+  "status": "completed",
+  "request_delay_seconds": 15.0,
+  "attempted": 2,
+  "median_latency_ms": 48053.759999999995,
+  "by_difficulty": {
+    "extra": {
+      "passed": 2,
+      "total": 2
+    }
+  }
+}

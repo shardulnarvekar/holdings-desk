@@ -1,0 +1,29 @@
+{
+  "question": "The latest available for Growth Equity Fund",
+  "status": "ok",
+  "message": "portfolio name: Growth Equity Fund; performance date: 2023-10-09; volatility: 18",
+  "tool": "sql_query",
+  "columns": [
+    "portfolio_name",
+    "performance_date",
+    "volatility"
+  ],
+  "rows": [
+    [
+      "Growth Equity Fund",
+      "2023-10-09",
+      18.0
+    ]
+  ],
+  "evidence": {
+    "sql": "SELECT p.portfolio_name, pp.performance_date, pp.volatility FROM portfolios p JOIN portfolio_performance pp ON p.portfolio_id = pp.portfolio_id WHERE p.portfolio_name = :portfolio_name ORDER BY pp.performance_date DESC LIMIT 1",
+    "parameters": {
+      "portfolio_name": "Growth Equity Fund"
+    },
+    "truncated": false
+  },
+  "warnings": [],
+  "elapsed_ms": 18240.05,
+  "backend": "gemini",
+  "error_code": ""
+}

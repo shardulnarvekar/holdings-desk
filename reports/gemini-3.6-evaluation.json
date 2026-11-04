@@ -1,0 +1,551 @@
+{
+  "created_at_utc": "2026-11-04T14:24:04.102613+00:00",
+  "dataset_sha256": "2bb7787cd86254cbeeb678193f72f22674d90c1ce89d31f303269b9acdae3778",
+  "mode": "live_gemini",
+  "model": "gemini-3.6-flash",
+  "results": [
+    {
+      "id": 1,
+      "question": "How many portfolios do we have in total?",
+      "difficulty": "easy",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "COUNT(*)"
+      ],
+      "expected_rows": [
+        [
+          13
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "daily_quota",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "How many portfolios do we have in total?",
+        "status": "error",
+        "message": "Gemini's daily quota is exhausted. Try after the quota resets; demo mode and the portfolio explorer still work.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 480.47,
+        "backend": "gemini",
+        "error_code": "daily_quota"
+      }
+    },
+    {
+      "id": 2,
+      "question": "What are the names of all active portfolios?",
+      "difficulty": "easy",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "portfolio_name"
+      ],
+      "expected_rows": [
+        [
+          "Growth Equity Fund"
+        ],
+        [
+          "Conservative Income Fund"
+        ],
+        [
+          "Tech Innovation Fund"
+        ],
+        [
+          "Balanced Portfolio"
+        ],
+        [
+          "ESG Sustainable Fund"
+        ],
+        [
+          "Small Cap Value Fund"
+        ],
+        [
+          "International Equity Fund"
+        ],
+        [
+          "Fixed Income Plus"
+        ],
+        [
+          "Dividend Aristocrats Fund"
+        ],
+        [
+          "Emerging Markets Fund"
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "skipped_after_provider_failure",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "What are the names of all active portfolios?",
+        "status": "skipped",
+        "message": "Not attempted after daily_quota.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 0,
+        "backend": "gemini",
+        "error_code": "skipped_after_provider_failure"
+      }
+    },
+    {
+      "id": 3,
+      "question": "Which securities are in the Technology sector?",
+      "difficulty": "easy",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "symbol",
+        "company_name"
+      ],
+      "expected_rows": [
+        [
+          "AAPL",
+          "Apple Inc."
+        ],
+        [
+          "MSFT",
+          "Microsoft Corporation"
+        ],
+        [
+          "GOOGL",
+          "Alphabet Inc."
+        ],
+        [
+          "META",
+          "Meta Platforms Inc."
+        ],
+        [
+          "NVDA",
+          "NVIDIA Corporation"
+        ],
+        [
+          "AVGO",
+          "Broadcom Inc."
+        ],
+        [
+          "CRM",
+          "Salesforce Inc."
+        ],
+        [
+          "ORCL",
+          "Oracle Corporation"
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "skipped_after_provider_failure",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "Which securities are in the Technology sector?",
+        "status": "skipped",
+        "message": "Not attempted after daily_quota.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 0,
+        "backend": "gemini",
+        "error_code": "skipped_after_provider_failure"
+      }
+    },
+    {
+      "id": 4,
+      "question": "What is the total Assets Under Management (AUM) for portfolios with high target risk level?",
+      "difficulty": "medium",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "SUM(total_aum)"
+      ],
+      "expected_rows": [
+        [
+          85000000.0
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "skipped_after_provider_failure",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "What is the total Assets Under Management (AUM) for portfolios with high target risk level?",
+        "status": "skipped",
+        "message": "Not attempted after daily_quota.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 0,
+        "backend": "gemini",
+        "error_code": "skipped_after_provider_failure"
+      }
+    },
+    {
+      "id": 5,
+      "question": "Show me the top 5 holdings by cost basis in the Growth Equity Fund",
+      "difficulty": "medium",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "holding_id",
+        "symbol",
+        "company_name",
+        "quantity",
+        "cost_basis"
+      ],
+      "expected_rows": [
+        [
+          1,
+          "AAPL",
+          "Apple Inc.",
+          2500.0,
+          438000.0
+        ],
+        [
+          8,
+          "AMZN",
+          "Amazon.com Inc.",
+          100.0,
+          320000.0
+        ],
+        [
+          2,
+          "MSFT",
+          "Microsoft Corporation",
+          800.0,
+          304400.0
+        ],
+        [
+          3,
+          "NVDA",
+          "NVIDIA Corporation",
+          400.0,
+          288040.0
+        ],
+        [
+          6,
+          "CRM",
+          "Salesforce Inc.",
+          1000.0,
+          185400.0
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "skipped_after_provider_failure",
+      "ordered_comparison": true,
+      "actual": {
+        "question": "Show me the top 5 holdings by cost basis in the Growth Equity Fund",
+        "status": "skipped",
+        "message": "Not attempted after daily_quota.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 0,
+        "backend": "gemini",
+        "error_code": "skipped_after_provider_failure"
+      }
+    },
+    {
+      "id": 6,
+      "question": "What is the average current price of securities in each sector?",
+      "difficulty": "medium",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "sector_name",
+        "avg_price"
+      ],
+      "expected_rows": [
+        [
+          "Consumer Discretionary",
+          3380.0
+        ],
+        [
+          "Technology",
+          719.245
+        ],
+        [
+          "Healthcare",
+          285.17
+        ],
+        [
+          "Automotive",
+          248.5
+        ],
+        [
+          "Financials",
+          201.2125
+        ],
+        [
+          "Consumer Staples",
+          173.8625
+        ],
+        [
+          "Energy",
+          128.575
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "skipped_after_provider_failure",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "What is the average current price of securities in each sector?",
+        "status": "skipped",
+        "message": "Not attempted after daily_quota.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 0,
+        "backend": "gemini",
+        "error_code": "skipped_after_provider_failure"
+      }
+    },
+    {
+      "id": 7,
+      "question": "For each portfolio, show the total value of Technology sector holdings and what percentage it represents of the total portfolio value",
+      "difficulty": "hard",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "portfolio_name",
+        "tech_value",
+        "total_value",
+        "tech_percentage"
+      ],
+      "expected_rows": [
+        [
+          "Tech Innovation Fund",
+          1565292.5,
+          1565292.5,
+          100.0
+        ],
+        [
+          "Growth Equity Fund",
+          1866148.0,
+          2204148.0,
+          84.67
+        ],
+        [
+          "Total International Index Fund",
+          1427086.0,
+          2281686.0,
+          62.55
+        ],
+        [
+          "International Equity Fund",
+          346888.0,
+          734928.0,
+          47.2
+        ],
+        [
+          "Total Stock Market Index Fund",
+          3093520.0,
+          6622340.0,
+          46.71
+        ],
+        [
+          "Balanced Portfolio",
+          388704.0,
+          1073279.0,
+          36.22
+        ],
+        [
+          "Emerging Markets Fund",
+          339095.0,
+          1045100.0,
+          32.45
+        ],
+        [
+          "ESG Sustainable Fund",
+          272978.0,
+          1007228.0,
+          27.1
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "skipped_after_provider_failure",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "For each portfolio, show the total value of Technology sector holdings and what percentage it represents of the total portfolio value",
+        "status": "skipped",
+        "message": "Not attempted after daily_quota.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 0,
+        "backend": "gemini",
+        "error_code": "skipped_after_provider_failure"
+      }
+    },
+    {
+      "id": 8,
+      "question": "Find portfolios that have holdings in more than 5 different sectors and show their diversification metrics",
+      "difficulty": "hard",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "portfolio_name",
+        "sector_count",
+        "total_holdings",
+        "diversification_ratio"
+      ],
+      "expected_rows": [
+        [
+          "Total Stock Market Index Fund",
+          6,
+          12,
+          0.5
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "skipped_after_provider_failure",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "Find portfolios that have holdings in more than 5 different sectors and show their diversification metrics",
+        "status": "skipped",
+        "message": "Not attempted after daily_quota.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 0,
+        "backend": "gemini",
+        "error_code": "skipped_after_provider_failure"
+      }
+    },
+    {
+      "id": 9,
+      "question": "What are the sector exposures for the Tech Innovation Fund?",
+      "difficulty": "medium",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "expected_rows": [
+        [
+          "Technology",
+          100.0
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "skipped_after_provider_failure",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "What are the sector exposures for the Tech Innovation Fund?",
+        "status": "skipped",
+        "message": "Not attempted after daily_quota.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 0,
+        "backend": "gemini",
+        "error_code": "skipped_after_provider_failure"
+      }
+    },
+    {
+      "id": 10,
+      "question": "Calculate the sector exposure breakdown for international equity",
+      "difficulty": "medium",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "expected_rows": [
+        [
+          "Technology",
+          36.0
+        ],
+        [
+          "Automotive",
+          15.0
+        ],
+        [
+          "Energy",
+          38.0
+        ],
+        [
+          "Consumer Staples",
+          11.0
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "skipped_after_provider_failure",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "Calculate the sector exposure breakdown for international equity",
+        "status": "skipped",
+        "message": "Not attempted after daily_quota.",
+        "tool": "",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 0,
+        "backend": "gemini",
+        "error_code": "skipped_after_provider_failure"
+      }
+    }
+  ],
+  "passed": 0,
+  "total": 10,
+  "accuracy": 0.0,
+  "tool_accuracy": 0.0,
+  "provider_failures": 1,
+  "skipped": 9,
+  "status": "blocked_by_provider",
+  "request_delay_seconds": 15.0,
+  "attempted": 1,
+  "median_latency_ms": 480.47,
+  "by_difficulty": {
+    "easy": {
+      "passed": 0,
+      "total": 3
+    },
+    "hard": {
+      "passed": 0,
+      "total": 2
+    },
+    "medium": {
+      "passed": 0,
+      "total": 5
+    }
+  }
+}

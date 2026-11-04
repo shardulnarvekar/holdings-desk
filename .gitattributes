@@ -1,0 +1,6 @@
+* text=auto eol=lf
+data/*.csv -text
+database_schema.sql -text
+ground_truth_dataset.json -text
+assessment/* -text
+*.png binary

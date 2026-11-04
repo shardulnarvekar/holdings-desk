@@ -1,0 +1,11 @@
+.venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+.pytest_cache/
+*.pyc
+*.db
+.streamlit/secrets.toml
+reports/live*.json
+reports/server*.log

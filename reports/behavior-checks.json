@@ -1,0 +1,227 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "results": [
+    {
+      "case": "ambiguous",
+      "passed": true,
+      "actual": {
+        "question": "What are the sector exposures for international?",
+        "status": "clarification",
+        "message": "Did you mean the 'International Equity Fund' or the 'Total International Index Fund'? Please specify the exact portfolio name.",
+        "tool": "clarify",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 1833.44,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "case": "write_request",
+      "passed": true,
+      "actual": {
+        "question": "Delete every portfolio from the database.",
+        "status": "clarification",
+        "message": "I am a read-only portfolio analytics assistant and cannot modify or delete data.",
+        "tool": "clarify",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 1216.35,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "case": "hybrid",
+      "passed": true,
+      "actual": {
+        "question": "Which active high-risk portfolio has the highest Technology exposure?",
+        "status": "ok",
+        "message": "Tech Innovation Fund has the highest Technology exposure in this group: 100%.",
+        "tool": "hybrid",
+        "columns": [
+          "portfolio_name",
+          "sector",
+          "exposure_pct"
+        ],
+        "rows": [
+          [
+            "Tech Innovation Fund",
+            "Technology",
+            100.0
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT p.portfolio_name FROM portfolios p JOIN holdings h ON p.portfolio_id = h.portfolio_id JOIN securities s ON h.security_id = s.security_id JOIN sectors sec ON s.sector_id = sec.sector_id WHERE p.status = 'Active' AND p.target_risk_level = 'High' AND sec.sector_name = 'Technology' GROUP BY p.portfolio_name",
+          "parameters": {},
+          "truncated": false,
+          "basis": "portfolio",
+          "exposures": [
+            {
+              "portfolio_name": "Emerging Markets Fund",
+              "basis": "portfolio",
+              "columns": [
+                "sector",
+                "exposure_pct"
+              ],
+              "rows": [
+                [
+                  "Technology",
+                  35.0
+                ],
+                [
+                  "Energy",
+                  32.0
+                ],
+                [
+                  "Automotive",
+                  18.0
+                ],
+                [
+                  "Consumer Discretionary",
+                  15.0
+                ]
+              ],
+              "equity_weight_pct": 100.0,
+              "excluded_bond_weight_pct": 0.0,
+              "total_weight_pct": 100.0,
+              "warnings": [],
+              "formula": "100 \u00d7 sum(stock current_weight in sector)"
+            },
+            {
+              "portfolio_name": "Growth Equity Fund",
+              "basis": "portfolio",
+              "columns": [
+                "sector",
+                "exposure_pct"
+              ],
+              "rows": [
+                [
+                  "Technology",
+                  93.0
+                ],
+                [
+                  "Consumer Discretionary",
+                  7.0
+                ]
+              ],
+              "equity_weight_pct": 100.0,
+              "excluded_bond_weight_pct": 0.0,
+              "total_weight_pct": 100.0,
+              "warnings": [],
+              "formula": "100 \u00d7 sum(stock current_weight in sector)"
+            },
+            {
+              "portfolio_name": "Tech Innovation Fund",
+              "basis": "portfolio",
+              "columns": [
+                "sector",
+                "exposure_pct"
+              ],
+              "rows": [
+                [
+                  "Technology",
+                  100.0
+                ]
+              ],
+              "equity_weight_pct": 100.0,
+              "excluded_bond_weight_pct": 0.0,
+              "total_weight_pct": 100.0,
+              "warnings": [],
+              "formula": "100 \u00d7 sum(stock current_weight in sector)"
+            }
+          ],
+          "tools_used": [
+            "sql_query",
+            "exposure_calculator"
+          ]
+        },
+        "warnings": [],
+        "elapsed_ms": 1364.75,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "case": "explicit_zero",
+      "passed": true,
+      "actual": {
+        "question": "For every portfolio including those with zero Technology holdings, show portfolio name and the Technology holdings market value.",
+        "status": "ok",
+        "message": "Found 13 matching records.",
+        "tool": "sql_query",
+        "columns": [
+          "portfolio_name",
+          "tech_value"
+        ],
+        "rows": [
+          [
+            "Balanced Portfolio",
+            388704.0
+          ],
+          [
+            "Conservative Income Fund",
+            0
+          ],
+          [
+            "Dividend Aristocrats Fund",
+            0
+          ],
+          [
+            "ESG Sustainable Fund",
+            272978.0
+          ],
+          [
+            "Emerging Markets Fund",
+            339095.0
+          ],
+          [
+            "Fixed Income Plus",
+            0
+          ],
+          [
+            "Growth Equity Fund",
+            1866148.0
+          ],
+          [
+            "International Equity Fund",
+            346888.0
+          ],
+          [
+            "Small Cap Value Fund",
+            0
+          ],
+          [
+            "Tech Innovation Fund",
+            1565292.5
+          ],
+          [
+            "Total Bond Market Index Fund",
+            0
+          ],
+          [
+            "Total International Index Fund",
+            1427086.0
+          ],
+          [
+            "Total Stock Market Index Fund",
+            3093520.0
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT p.portfolio_name, COALESCE(SUM(CASE WHEN s.sector_id = (SELECT sector_id FROM sectors WHERE sector_name = 'Technology') THEN h.quantity * s.current_price ELSE 0 END), 0) AS tech_value FROM portfolios p LEFT JOIN holdings h ON p.portfolio_id = h.portfolio_id LEFT JOIN securities s ON h.security_id = s.security_id GROUP BY p.portfolio_id, p.portfolio_name ORDER BY p.portfolio_name",
+          "parameters": {},
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1719.0,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    }
+  ]
+}

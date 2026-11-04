@@ -1,0 +1,49 @@
+:root {--ink:#202124;--muted:#58606b;--line:#e4e6e9;--surface:#fff;--accent:#30363d}
+[data-testid="stApp"] {background:var(--surface);color:var(--ink);font-family:PortfolioSans,sans-serif}
+.block-container {max-width:1000px;padding-top:2.8rem;padding-bottom:2rem}
+h1 {font-family:PortfolioSans,sans-serif!important;font-size:1.9rem!important;font-weight:600!important;letter-spacing:-.025em!important;line-height:1.25!important;padding-bottom:.2rem!important}
+h2,h3 {font-family:PortfolioSans,sans-serif!important;font-size:1.2rem!important;font-weight:600!important;letter-spacing:0!important;line-height:1.6!important}
+[data-testid="stCaptionContainer"] {color:var(--muted);font-size:.8rem}
+[data-testid="stCaptionContainer"] p {color:var(--muted)!important;font-size:.875rem!important;line-height:1.55}
+[data-testid="stMarkdownContainer"] p {line-height:1.65}
+[data-testid="stTextInput"] input {font-size:1rem;min-height:46px}
+[data-testid="stTextInput"] input::placeholder {color:#606872;opacity:1}
+[data-testid="stTabs"] [data-baseweb="tab-panel"] {padding-top:1.4rem}
+[data-testid="stForm"] {padding:0}
+[data-testid="stAlert"] p {font-size:1rem;line-height:1.6}
+* {scrollbar-color:#adb3bb #f5f6f7;scrollbar-width:thin}
+[data-baseweb="tab-list"] {gap:25px;border-bottom:1px solid var(--line)}
+[data-baseweb="tab"] {padding:12px 0!important;min-height:44px!important}
+[data-baseweb="tab-highlight"] {background:var(--ink);height:2px}
+button {border-radius:6px!important;min-height:42px!important}
+button:focus-visible,a:focus-visible,summary:focus-visible {outline:2px solid #435b82!important;outline-offset:3px}
+[data-testid="stExpander"] {border:1px solid var(--line);border-radius:6px}
+[data-testid="stExpander"] summary {min-height:42px}
+[data-testid="stDataFrame"] {font-variant-numeric:tabular-nums}
+::selection {background:#dce5f2;color:#202124}
+input {caret-color:var(--ink)}
+a {text-underline-offset:3px}
+.sector-chart {margin:6px 0 16px}
+.sector-row {padding:9px 0}
+.sector-label {display:flex;justify-content:space-between;gap:16px;margin-bottom:8px;font-size:14px}
+.sector-value {font-variant-numeric:tabular-nums;white-space:nowrap}
+.sector-track {height:6px;background:#eef0f2;border-radius:2px;overflow:hidden}
+.sector-fill {height:100%;background:#515d6c;border-radius:2px}
+.chart-scale {display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:10px}
+@media(max-width:600px) {.block-container{padding-top:2.6rem} [data-baseweb="tab-list"]{gap:18px} [data-baseweb="tab"]{font-size:13px}}
+
+[data-testid="stApp"] p, [data-testid="stApp"] input, [data-testid="stApp"] button, [data-testid="stApp"] label {font-family:PortfolioSans,sans-serif!important}
+
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] p {font-size:1.075rem;line-height:1.65}
+@media(max-width:600px) {h1 {font-size:1.65rem!important}}
+
+/* A restrained research workspace: generous groups, compact controls. */
+[data-testid="stTabs"] {margin-top:1rem}
+[data-testid="stTextInput"] input {background:#fff;border-radius:7px;min-height:50px}
+[data-testid="stTextInput"] [data-baseweb="input"] {border:1px solid #c8cdd3;border-radius:7px}
+[data-testid="stFormSubmitButton"] button {padding:.55rem 1.3rem;font-weight:600}
+[data-testid="stExpander"] {background:#fafbfc}
+[data-testid="stDataFrame"] {border-radius:7px}
+[data-testid="stMarkdownContainer"] hr {margin:1.6rem 0}
+[data-baseweb="tab"] p {font-size:1rem!important}
+[data-testid="stCaptionContainer"] p {max-width:76ch}
