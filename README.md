@@ -12,7 +12,8 @@ Streamlit workspace to inspect tables, charts and execution evidence.
 
 ## Quick start
 
-You need **Python 3.13**, an internet connection for setup/live AI, and your own
+Install **Python 3.13** first (including the Python launcher on Windows). You also need
+an internet connection for setup/live AI and your own
 [Gemini API key from Google AI Studio](https://aistudio.google.com/apikey).
 No database server, Docker, Node.js or manual CSV import is needed.
 
@@ -24,7 +25,7 @@ cd holdings-desk
 ```
 
 Alternatively, choose **Code → Download ZIP** on GitHub, extract the ZIP, and open a terminal
-in the folder containing `setup_project.py`. The repository is public; no GitHub account is needed to download it.
+in the folder containing `setup_project.py`.
 
 ### 2. Install and configure
 
@@ -33,30 +34,15 @@ py -3.13 setup_project.py
 ```
 
 This creates `.venv`, installs the pinned dependencies, checks them, and creates `.env`.
-An existing `.env` is preserved. Open `.env` in a text editor and set:
+Open the generated `.env` in a text editor and set:
 
 ```dotenv
 GEMINI_API_KEY=your-own-key-here
 GEMINI_MODEL=gemini-3.5-flash-lite
 ```
 
-Save the file as `.env`, not `.env.txt`. Your key stays local and is ignored by Git.
-Setup itself makes no model requests. On macOS/Linux, use `python3.13 setup_project.py`.
-If Windows does not recognize `py`, use the full path to your Python 3.13 executable.
-Do not launch the CLI until setup prints **Setup complete**.
-
-**Recovering from a failed Python 3.11 installation:** install Python 3.13, close any
-process using this project's `.venv`, and run these commands from the project folder:
-
-```powershell
-git pull
-ren .venv .venv-old
-py -3.13 setup_project.py
-```
-
-This preserves the old environment and your project-level `.env`. If `.venv-old` already
-exists, choose another backup name. Installing Python 3.13 alone does not upgrade an
-existing virtual environment.
+Save `.env`. Your key stays local and is ignored by Git. Continue once setup prints
+**Setup complete**. On macOS/Linux, use `python3.13 setup_project.py`.
 
 ### 3. Run
 
