@@ -14,12 +14,13 @@ README and suggested requirements. Original instructions are retained under `ass
 
 ## Automated and setup checks
 
-- **43 automated tests pass** in the project environment.
+- **48 automated tests pass** in fresh Python 3.11 and Python 3.13 environments on Windows.
 - All **18 reference cases** execute correctly. This checks the expected data, not AI accuracy.
 - `pip check` reports no broken dependencies.
 - A new source copy with no `.env` or `.venv` completed `python setup_project.py` using
-  Python 3.13 on Windows. Its generated `.env` contains no key. Separate-environment
-  tests, CLI smoke check and dependency validation are recorded during this release audit.
+  Python 3.11 and Python 3.13 on Windows, in paths containing spaces. Both generated
+  `.env` files contain no key; both passed all 48 tests and dependency validation.
+  Python 3.11 also passed the direct CLI calculation and all 18 reference checks.
 - UI reviewed at 390/768/1440 px with no page overflow; logo remains visible.
 - Source and existing Git history scanned for the local key and common secret patterns.
 - Each question is independent. No model request runs merely from loading the UI.
@@ -27,6 +28,18 @@ README and suggested requirements. Original instructions are retained under `ass
 Tests cover read-only SQL boundaries, execution budgets, parameter injection, deterministic
 calculations, mixed/bond-only funds, incomplete weights, ambiguity, evaluator mismatches,
 bounded SQL repair, preserved failure evidence, SDK serialization, CLI and UI behavior.
+
+## Setup compatibility correction
+
+A reviewer-style Python 3.11 installation exposed a NumPy pin that required Python
+3.12 or newer. The original Python 3.13 setup check did not cover this case.
+The lock file now selects NumPy 2.4.6 on Python 3.11 and retains NumPy 2.5.4 on
+Python 3.12+. All other pinned versions are unchanged. Real clean installations
+and the complete test suite passed on both locally available Python versions.
+Repeating setup preserved `.env` unchanged. The originally failed Python 3.11
+test copy also completed setup successfully without replacing its virtual environment,
+and passed a direct CLI calculation and dependency check.
+This change does not alter the agent prompt or financial calculations.
 
 ## Live results
 
@@ -56,7 +69,7 @@ requests. Provider quotas, latency and outages remain external constraints. Erro
 shown rather than substituted with fabricated answers. The reference-specific sector
 cohort and diversification conventions are documented in `docs/METHODOLOGY.md`.
 
-Windows/Python 3.13 is verified locally. macOS/Linux commands are documented, not locally
+Windows/Python 3.11 and 3.13 are verified locally. macOS/Linux commands are documented, not locally
 tested. Original code/documentation is MIT licensed; supplied materials and third-party
 assets are explicitly excluded. The PL Capital mark identifies assessment context, not
 official endorsement. GitHub publication does not deploy a public service.

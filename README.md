@@ -12,7 +12,7 @@ Streamlit workspace to inspect tables, charts and execution evidence.
 
 ## Quick start
 
-Install **Python 3.13** first (including the Python launcher on Windows). You also need
+Use **64-bit Python 3.11–3.13**. You also need
 an internet connection for setup/live AI and your own
 [Gemini API key from Google AI Studio](https://aistudio.google.com/apikey).
 No database server, Docker, Node.js or manual CSV import is needed.
@@ -30,7 +30,7 @@ in the folder containing `setup_project.py`.
 ### 2. Install and configure
 
 ```powershell
-py -3.13 setup_project.py
+python setup_project.py
 ```
 
 This creates `.venv`, installs the pinned dependencies, checks them, and creates `.env`.
@@ -42,7 +42,7 @@ GEMINI_MODEL=gemini-3.5-flash-lite
 ```
 
 Save `.env`. Your key stays local and is ignored by Git. Continue once setup prints
-**Setup complete**. On macOS/Linux, use `python3.13 setup_project.py`.
+**Setup complete**. On macOS/Linux, use `python3 setup_project.py`.
 
 ### 3. Run
 
@@ -63,7 +63,7 @@ Every question is independent. Include the portfolio, metric and period you need
 
 Open **http://localhost:8501**. Keep the terminal running; press Ctrl+C to stop it.
 The CLI works without the web server. On macOS/Linux replace `.\.venv\Scripts\python.exe`
-with `./.venv/bin/python`. Windows/Python 3.13 is the locally verified setup.
+with `./.venv/bin/python`. Windows/Python 3.11 and 3.13 are verified locally.
 
 ## Try it
 
@@ -147,7 +147,7 @@ data/ + assessment/    Original supplied materials
 
 | Symptom | Action |
 |---|---|
-| Python not found | Install Python 3.13, reopen the terminal; Windows users can try `py -3.13 setup_project.py`. |
+| Python not found | Install 64-bit Python 3.11–3.13 and reopen the terminal. |
 | Missing modules | Rerun setup and use the `.venv` Python commands above. |
 | Missing/rejected API key | Check `.env`, project access and that the filename is not `.env.txt`. |
 | Rate limit or daily quota | Check your AI Studio quota; wait for reset. Direct calculations remain available. |
