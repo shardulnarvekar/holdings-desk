@@ -2,7 +2,7 @@
 
 ## Financial definitions and data limitations
 
-- **Exposure default:** `100 × SUM(current_weight)` for stock holdings in each sector.
+- **Exposure default:** `100 Ã— SUM(current_weight)` for stock holdings in each sector.
   Do not replace weights with price-derived weights. Bonds are excluded without rescaling.
 - **Equity-only basis:** divide the stock-sector weight by all stock weights. This is an explicit
   option, not the default. A portfolio with no equities returns no sector rows and an explanation.
@@ -11,7 +11,7 @@
 - **Incomplete weights:** Total Stock Market Index Fund sums to 98%. The remaining 2% is
   unaccounted for in supplied weights; it is not assumed to be cash.
 - **AUM versus holding value:** `portfolios.total_aum` is recorded AUM. Market-value queries use
-  `quantity × current_price`, as in supplied reference question 7. These values do not reconcile
+  `quantity Ã— current_price`, as in supplied reference question 7. These values do not reconcile
   in this dataset. Bond prices are treated exactly as that reference specifies; no face-value
   conversion is invented.
 - **Different measures can differ:** International Equity Fund's Technology exposure is 36%
@@ -22,7 +22,7 @@
   sector, following the supplied reference. Zero-exposure portfolios are included only when
   explicitly requested. The phrase "for each portfolio" is ambiguous in the supplied question;
   this convention is documented rather than changing the expected data.
-- **Historical sample:** dated observations span 25 Sep–09 Oct 2023. This is not live market data.
+- **Historical sample:** dated observations span 25 Sepâ€“09 Oct 2023. This is not live market data.
 - **Diversification ratio:** distinct stock sectors / total holdings, rounded to 3 decimals,
   follows the supplied evaluation convention. It is not a general-purpose financial risk score.
 
@@ -67,4 +67,3 @@ The agent never imports the ground-truth file. The prompt contains documented do
 including the supplied diversification convention, but no stored answers. The 10 supplied cases
 are development examples, not a blind test set. The additional 8 questions are also authored
 development checks; neither score proves performance on unseen finance questions.
-
