@@ -10,12 +10,23 @@ ROOT = Path(__file__).resolve().parent
 
 
 def main():
-    if sys.version_info < (3, 11):
-        print('Python 3.11 or newer is required. Python 3.13 is the tested version.')
+    if sys.version_info < (3, 12):
+        print('Pinned dependencies require Python 3.12 or newer. Use Python 3.13 (tested).')
+        print('On Windows: py -3.13 setup_project.py')
         return 1
     environment = ROOT / '.venv'
     executable = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
     try:
+        if executable.exists():
+            version = subprocess.run(
+                [str(executable), '-c', 'import sys; print("%d.%d" % sys.version_info[:2])'],
+                check=True, capture_output=True, text=True,
+            ).stdout.strip()
+            if tuple(map(int, version.split('.'))) < (3, 12):
+                print(f'Existing .venv uses Python {version}, which cannot install the pinned dependencies.')
+                print('Rename .venv to .venv-old, then rerun setup using Python 3.13.')
+                print('Your .env file should stay in the project folder.')
+                return 1
         if not executable.exists():
             print('Creating the project virtual environment...', flush=True)
             venv.EnvBuilder(with_pip=True).create(environment)

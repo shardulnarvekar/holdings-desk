@@ -28,8 +28,8 @@ in the folder containing `setup_project.py`. The repository is public; no GitHub
 
 ### 2. Install and configure
 
-```sh
-python setup_project.py
+```powershell
+py -3.13 setup_project.py
 ```
 
 This creates `.venv`, installs the pinned dependencies, checks them, and creates `.env`.
@@ -41,7 +41,22 @@ GEMINI_MODEL=gemini-3.5-flash-lite
 ```
 
 Save the file as `.env`, not `.env.txt`. Your key stays local and is ignored by Git.
-Setup itself makes no model requests. On macOS/Linux, use `python3 setup_project.py`.
+Setup itself makes no model requests. On macOS/Linux, use `python3.13 setup_project.py`.
+If Windows does not recognize `py`, use the full path to your Python 3.13 executable.
+Do not launch the CLI until setup prints **Setup complete**.
+
+**Recovering from a failed Python 3.11 installation:** install Python 3.13, close any
+process using this project's `.venv`, and run these commands from the project folder:
+
+```powershell
+git pull
+ren .venv .venv-old
+py -3.13 setup_project.py
+```
+
+This preserves the old environment and your project-level `.env`. If `.venv-old` already
+exists, choose another backup name. Installing Python 3.13 alone does not upgrade an
+existing virtual environment.
 
 ### 3. Run
 
