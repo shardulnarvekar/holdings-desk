@@ -24,7 +24,7 @@ cd holdings-desk
 ```
 
 Alternatively, choose **Code → Download ZIP** on GitHub, extract the ZIP, and open a terminal
-in the folder containing `setup_project.py`. While the repository is private, you need access.
+in the folder containing `setup_project.py`. The repository is public; no GitHub account is needed to download it.
 
 ### 2. Install and configure
 
