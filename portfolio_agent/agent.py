@@ -23,13 +23,19 @@ class PortfolioAgent:
             try:
                 self._execute(plan, answer)
             except AnalyticsError as exc:
-                # One repair only for ordinary SQL syntax/schema errors, never safety blocks.
-                repairable = any(t in str(exc).lower() for t in ("no such column", "no such table", "syntax error", "ambiguous column"))
+                # Repair SQL syntax/schema or an invalid hybrid result contract once; never safety blocks.
+                repairable = any(t in str(exc).lower() for t in (
+                    "no such column", "no such table", "syntax error", "ambiguous column",
+                    "a hybrid query must return",
+                ))
                 if plan.tool not in {"sql_query", "hybrid"} or not repairable:
                     raise
                 attempts.append({"sql": plan.sql, "error": str(exc)})
                 answer.evidence["repair_attempts"] = attempts
-                plan = self.planner.plan(question, f"SQL: {plan.sql}\nError: {exc}")
+                original_tool = plan.tool
+                plan = self.planner.plan(question, f"Repair the SQL for tool={original_tool}. Preserve the requested metric and tool. SQL: {plan.sql}\nError: {exc}")
+                if plan.tool != original_tool:
+                    raise AnalyticsError("The SQL correction changed the requested calculation. Please retry the question.")
                 answer.tool = plan.tool
                 self._execute(plan, answer)
             if attempts:
@@ -73,6 +79,8 @@ class PortfolioAgent:
         # Hybrid query selects a cohort; deterministic exposure tool operates on each fund.
         if result.truncated or len(result.columns) != 1 or result.columns[0] != "portfolio_name":
             raise AnalyticsError("A hybrid query must return a complete, single portfolio_name column.")
+        if any(not isinstance(row[0], str) or row[0] not in self.db.portfolios for row in result.rows):
+            raise AnalyticsError("A hybrid query must return recorded portfolio names, not missing or invented values.")
         if plan.top_n and not plan.sector:
             raise AnalyticsError("Specify a sector before ranking portfolio exposures.")
         sector = None

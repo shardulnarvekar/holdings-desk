@@ -53,3 +53,31 @@ def test_error_is_visible_without_entering_context(monkeypatch):
     assert "conversation" not in app.session_state
     assert any("Quota reached" in e.value for e in app.error)
     assert not app.exception
+
+
+def test_ui_can_answer_after_provider_error(monkeypatch):
+    calls = []
+    def plan(*args, **kwargs):
+        calls.append(1)
+        if len(calls) == 1:
+            raise ProviderError("Gemini rate limit reached.", "rate_limit")
+        return Plan(tool="sql_query", sql="SELECT COUNT(*) AS portfolio_count FROM portfolios")
+    monkeypatch.setattr(GeminiPlanner, "plan", plan)
+    app = AppTest.from_file(str(ROOT / "app.py"), default_timeout=20).run()
+    app.text_input[0].set_value("Count portfolios")
+    app.button[0].click().run()
+    assert app.error and not app.exception
+    app.button[0].click().run()
+    assert not app.error and not app.exception
+    assert app.session_state["live_answer"]["rows"] == [[13]]
+
+
+def test_ui_without_key_leaves_explorer_available(monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "")
+    def forbidden(*args, **kwargs):
+        raise AssertionError("No API request expected")
+    monkeypatch.setattr(GeminiPlanner, "plan", forbidden)
+    app = AppTest.from_file(str(ROOT / "app.py"), default_timeout=20).run()
+    assert app.button[0].disabled and not app.exception
+    app.selectbox[0].select("Balanced Portfolio").run()
+    assert not app.exception and app.dataframe

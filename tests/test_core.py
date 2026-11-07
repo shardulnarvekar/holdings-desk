@@ -185,3 +185,35 @@ def test_daily_quota_stops_requests_and_checkpoints(db):
     assert planner.calls == 1
     assert [r["actual"]["status"] for r in results] == ["error", "skipped", "skipped"]
     assert checkpoints == [1, 2, 3]
+
+
+@pytest.mark.parametrize("value", ["NULL", "123", "'Imaginary Fund'"])
+def test_hybrid_rejects_invalid_cohort_values_without_crashing(db, value):
+    bad = Plan(tool="hybrid", sql=f"SELECT {value} AS portfolio_name", sector="Technology")
+    planner = StubPlanner(bad, bad)
+    answer = PortfolioAgent(db, planner).answer_question("Compare Technology exposure")
+    assert answer.status == "error" and not answer.rows
+    assert "portfolio" in answer.message.lower()
+    assert db.query("SELECT COUNT(*) FROM portfolios").rows == [[13]]
+
+
+def test_hybrid_invalid_result_is_corrected_to_a_real_answer(db):
+    planner = StubPlanner(
+        Plan(tool="hybrid", sql="SELECT NULL AS portfolio_name", sector="Technology", top_n=1),
+        Plan(tool="hybrid", sql="SELECT portfolio_name FROM portfolios WHERE status='Active' AND target_risk_level='High'", sector="Technology", top_n=1),
+    )
+    answer = PortfolioAgent(db, planner).answer_question("Which active high-risk portfolio has the highest Technology exposure?")
+    assert answer.status == "ok" and planner.calls == 2
+    assert answer.rows == [["Tech Innovation Fund", "Technology", 100.0]]
+    assert answer.evidence["repair_attempts"]
+
+
+def test_sql_repair_cannot_silently_change_metric_or_tool(db):
+    planner = StubPlanner(
+        Plan(tool="sql_query", sql="SELECT current_price FROM holdings"),
+        Plan(tool="hybrid", sql="SELECT portfolio_name FROM portfolios", sector="Technology"),
+    )
+    answer = PortfolioAgent(db, planner).answer_question("Technology market value")
+    assert answer.status == "error" and not answer.rows
+    assert "changed the requested calculation" in answer.message
+    assert planner.calls == 2

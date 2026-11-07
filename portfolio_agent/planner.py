@@ -31,6 +31,9 @@ Ordinary 'sector exposure' means supplied stock weights (basis=portfolio); it do
 require a basis clarification. Use market value or equity normalization only if requested.
 
 SQL RULES:
+When repairing a previous SQL error, preserve the original tool and requested metric.
+Never replace a market-value SQL calculation with weight-based exposure or hybrid.
+current_price belongs to securities, not holdings: join securities when valuing holdings.
 Use exact schema and recorded values. Bind user-derived values using :named placeholders
 and parameters (name without colon). Never query sqlite_master or PRAGMA.
 Return columns that the question requests, in its natural order; avoid extra columns.

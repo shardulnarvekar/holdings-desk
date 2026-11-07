@@ -86,3 +86,28 @@ calculation executes. All 51 automated tests passed on the development Python 3.
 environment. The originally failing question passed live in the Python 3.11 test copy:
 Tech Innovation Fund, 100% Technology exposure, 1.50 seconds. This targeted recheck
 is separate from the earlier full 18-case evaluation.
+
+
+## Repeated reliability audit — 8 November 2026
+
+- Fresh Windows/Python 3.11 and 3.13 setups completed. The final expanded suite
+  passed **80 tests on each version**. Reports: `clean-311-tests.xml` and
+  `clean-313-tests.xml` under `reports/`.
+- Fault tests cover malformed model JSON, incomplete plans, duplicate parameters,
+  invalid hybrid result values, authentication/quota/server failures, actual SDK retry
+  limits, recovery on the next question, key edits across process restarts, and UI recovery.
+- Two full live rounds passed **18/18 each**. The interrupted third round passed
+  **8/9**, for **44/45 overall** before the final repair change. Its failure was a
+  market-value SQL repair switching to weight-based exposure. Original evidence remains
+  in `reports/reliability-2026-11-08.json`; this is not a perfect-accuracy claim.
+- The repair prompt now preserves the tool and metric and identifies the correct price
+  table. Execution also rejects a repair that changes tools. Invalid hybrid output can
+  receive one correction; tests prove corrected output produces the real answer.
+- Broad testing was stopped to honor the user's credit limit. The planned paraphrase
+  stage was not run. Targeted final results are recorded separately in
+  `reports/targeted-final-2026-11-08.json`: **8/8 passed**, comprising three market-value
+  questions, three hybrid comparisons, one ambiguity check and one destructive-request refusal.
+
+The full repeated run began before the hybrid-result guard was added. Final code was
+verified by the expanded offline suite and targeted live checks. No tests or comparisons
+were relaxed to turn a failing result into a pass.
