@@ -11,7 +11,7 @@ from portfolio_agent.exposure import calculate_exposure
 from portfolio_agent.models import AnalyticsError
 from portfolio_agent.planner import GeminiPlanner
 
-st.set_page_config(page_title="Portfolio Lens | Portfolio Analytics", page_icon=":material/account_balance:", layout="wide")
+st.set_page_config(page_title="Holdings Desk | Portfolio Analytics", page_icon=":material/account_balance:", layout="wide")
 load_dotenv(ROOT / ".env", override=True)
 font_css = ""
 for weight, filename in [(400, "SourceSans3-Regular.ttf.woff2"), (600, "SourceSans3-Semibold.ttf.woff2")]:
@@ -61,13 +61,13 @@ def render_answer(answer, message_key):
         display_data = data.rename(columns={"sector": "Sector", "exposure_pct": "Exposure (%)"})
         basis = answer["evidence"]["basis"]
         st.caption("Percentage of " + ("the equity allocation" if basis == "equity" else "the whole portfolio using supplied weights") + ". Bonds excluded.")
-        st.dataframe(display_data, hide_index=True, use_container_width=True,
+        st.dataframe(display_data, hide_index=True, width="stretch",
             column_config={"Exposure (%)": st.column_config.NumberColumn("Exposure (%)", format="%.2f")})
         with st.expander("View sector chart"):
             render_sector_chart(answer["rows"])
     elif not data.empty:
         display_data = data.rename(columns=lambda name: name.replace("_", " ").capitalize())
-        st.dataframe(display_data, hide_index=True, use_container_width=True)
+        st.dataframe(display_data, hide_index=True, width="stretch")
     with st.expander("Details & export"):
         st.caption(f"{answer['tool'].replace('_', ' ')} · {answer['elapsed_ms'] / 1000:.2f}s · {answer['backend']}")
         evidence = answer["evidence"]
@@ -83,8 +83,8 @@ def render_answer(answer, message_key):
             st.download_button("Download CSV", data.to_csv(index=False), "portfolio-result.csv", "text/csv", key=f"csv_{message_key}")
 
 
-st.title("Portfolio Lens")
-st.caption("Portfolio analytics · Holdings, allocations and exposure")
+brand_data = base64.b64encode((ROOT / "assets" / "brand" / "pl-capital.svg").read_bytes()).decode("ascii")
+st.markdown(f'<div class="product-heading"><div><h1>Holdings Desk</h1><p>Holdings, allocations and sector exposure</p></div><a href="https://www.plindia.com/" target="_blank" rel="noopener noreferrer" aria-label="PL Capital official website"><img src="data:image/svg+xml;base64,{brand_data}" alt="PL Capital" width="148"></a></div>', unsafe_allow_html=True)
 ask, explore, notes = st.tabs(["Ask the agent", "Portfolio explorer", "About the data"])
 
 with ask:
@@ -124,7 +124,7 @@ with explore:
             st.warning(warning)
         if exposure["rows"]:
             data = pd.DataFrame(exposure["rows"], columns=["Sector", "Exposure (%)"])
-            st.dataframe(data, hide_index=True, use_container_width=True)
+            st.dataframe(data, hide_index=True, width="stretch")
             with st.expander("View sector chart"):
                 render_sector_chart(exposure["rows"])
         else:
@@ -132,7 +132,7 @@ with explore:
         st.caption(f"Supplied weights: {exposure['total_weight_pct']:g}% · Equities: {exposure['equity_weight_pct']:g}% · Bonds excluded: {exposure['excluded_bond_weight_pct']:g}%")
         with st.expander("Portfolio directory"):
             directory = db.query("SELECT portfolio_name, target_risk_level, total_aum, status FROM portfolios")
-            st.dataframe(pd.DataFrame(directory.rows, columns=directory.columns), hide_index=True, use_container_width=True)
+            st.dataframe(pd.DataFrame(directory.rows, columns=directory.columns), hide_index=True, width="stretch")
     finally:
         db.close()
 
@@ -159,4 +159,4 @@ Each question is independent. Earlier questions and answers are not sent to Gemi
     st.code("python evaluate.py --reference-check\npython evaluate.py --extra\npython -m pytest -q", language="bash")
     st.caption("Reference checking validates the dataset only. Live evaluation measures Gemini answers against reference results. See reports/ for generated reports.")
 
-st.caption("Sample data · September–October 2023 · Not live market data")
+st.caption("Historical sample data · Independent project for the PL Capital assessment; not an official service.")

@@ -47,3 +47,8 @@ a {text-underline-offset:3px}
 [data-testid="stMarkdownContainer"] hr {margin:1.6rem 0}
 [data-baseweb="tab"] p {font-size:1rem!important}
 [data-testid="stCaptionContainer"] p {max-width:76ch}
+
+.product-heading {display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:12px}
+.product-heading p {color:var(--muted);margin:4px 0 0;font-size:16px!important}
+.product-heading img {display:block;width:148px;height:auto}
+@media(max-width:600px) {.product-heading{gap:12px}.product-heading img{width:100px}.product-heading p{font-size:14px!important}}

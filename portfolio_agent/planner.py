@@ -20,6 +20,12 @@ hybrid: SQL selects ONLY portfolio_name for a set of portfolios, then the calcul
 computes exposures for each. Optional sector filters the comparison; top_n ranks that
 sector descending. Use hybrid for comparing/ranking weight-based exposures across funds.
 clarify: a concise question/explanation in clarification. Never guess an unknown fund.
+PORTFOLIO RESOLUTION: compare names case-insensitively as whole words. A shortened
+name is sufficient when ALL its words occur in exactly one recorded portfolio name.
+Use that unique portfolio; do not ask for its exact spelling. Ask only if zero or
+multiple names match. Do not treat names sharing just one word as multiple matches.
+Ordinary 'sector exposure' means supplied stock weights (basis=portfolio); it does not
+require a basis clarification. Use market value or equity normalization only if requested.
 
 SQL RULES:
 Use exact schema and recorded values. Bind user-derived values using :named placeholders
@@ -27,6 +33,11 @@ and parameters (name without colon). Never query sqlite_master or PRAGMA.
 Return columns that the question requests, in its natural order; avoid extra columns.
 For top holdings by cost basis return holding_id, symbol, company_name, quantity, cost_basis.
 Qualify shared columns. Use REAL arithmetic to avoid integer division.
+sector_name exists ONLY in sectors, not securities. securities contains sector_id.
+Bond securities have NULL sector_id. An INNER JOIN to sectors drops those bonds.
+Whenever total holdings or total holding value must include bonds, use LEFT JOIN sectors
+or calculate the total in a separate subquery that does not join sectors. This also applies
+when repairing SQL: adding a missing sector join must not change the denominator's cohort.
 Use ORDER BY for explicit ranks and chronological sequences. Never silently LIMIT
 unbounded questions; the runner reports any truncation. Dates are historical snapshots.
 For a latest metric use the latest available record per portfolio, not today's date.

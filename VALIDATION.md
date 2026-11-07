@@ -1,60 +1,62 @@
-# Verification
+# Release verification
 
-Verified on Windows / Python 3.13, 4 November 2026.
+Final audit: **7 November 2026**. Model: `gemini-3.5-flash-lite`.
 
-## Requirements coverage
+## Required scope
 
-| Supplied requirement | Implementation |
-|---|---|
-| Natural-language SQL tool | Structured Gemini plan and bounded read-only SQLite executor |
-| Stock-sector exposure calculator | Adds supplied stock weights by sector; excludes bonds |
-| Command-line agent | `python -m portfolio_agent` |
-| Ground-truth evaluator | `python evaluate.py` |
-| Run documentation and error handling | README, setup script, actionable errors and bounded retries |
+The SQL tool, stock-sector exposure calculator, CLI agent, ground-truth evaluator,
+run documentation and error handling are implemented. Streamlit, hybrid comparisons,
+evidence/export and equity-only normalization are documented extras. No chat memory,
+REST service, agent framework or extra deployment is needed.
 
-All 13 supplied files (schema, ground truth, original instructions, suggested libraries and
-nine CSV files) were compared byte-for-byte with the original package and match.
-No further feature is required by the assignment. The optional Streamlit UI, evidence,
-SQL safeguards, equity-only basis and hybrid tool comparisons are documented extras.
+All 13 original supplied files match byte-for-byte: nine CSVs, schema, ground truth,
+README and suggested requirements. Original instructions are retained under `assessment/`.
 
-## Current checks
+## Automated and setup checks
 
-- 43 automated tests passed; report: `reports/unit-tests.xml`.
-- All 18 reference cases execute successfully; report: `reports/reference-check.json`.
-  Reference checking validates data/oracles, not model accuracy.
-- Pinned dependency environment passes `pip check`.
-- CLI, error paths, independent questions, SDK serialization, calculations, query safety,
-  result comparison and Streamlit interactions are covered by tests.
-- Reviewer setup was previously tested in a separate environment without the developer's
-  `.env`; install and a live CLI question worked. Windows is verified; other OSes are not.
-- UI has no chat history, follow-up memory or demo selector. Each question is independent.
-  The CLI's optional preset demo is explicitly labelled and never counted as AI accuracy.
-- Desktop/mobile layout checks found no horizontal overflow at 390/768/1440 px.
+- **43 automated tests pass** in the project environment.
+- All **18 reference cases** execute correctly. This checks the expected data, not AI accuracy.
+- `pip check` reports no broken dependencies.
+- A new source copy with no `.env` or `.venv` completed `python setup_project.py` using
+  Python 3.13 on Windows. Its generated `.env` contains no key. Separate-environment
+  tests, CLI smoke check and dependency validation are recorded during this release audit.
+- UI reviewed at 390/768/1440 px with no page overflow; logo remains visible.
+- Source and existing Git history scanned for the local key and common secret patterns.
+- Each question is independent. No model request runs merely from loading the UI.
 
-## Live evaluation
+Tests cover read-only SQL boundaries, execution budgets, parameter injection, deterministic
+calculations, mixed/bond-only funds, incomplete weights, ambiguity, evaluator mismatches,
+bounded SQL repair, preserved failure evidence, SDK serialization, CLI and UI behavior.
 
-`reports/submission-evaluation.json` records the latest pre-publication run on
-`gemini-3.5-flash-lite`, including every attempted case, provider error and latency.
-The completed run passed 9/10 supplied cases, with median latency 19.23 seconds.
-Question 7 failed with an invalid column reference after one SQL repair. A targeted
-recheck is recorded separately in `reports/submission-q7-recheck.json`; it does not
-rewrite the full-run score. That recheck passed (1/1) in 20.19 seconds. Failed SQL is now retained in evidence for diagnosis,
-with automated coverage. Both the project and clean reviewer environments pass 43 tests.
+## Live results
 
-Earlier full evaluation (`reports/final-evaluation.json`) passed all 10 required cases
-and 6/8 extras; the two failed extra requests passed on a separate targeted retry
-(`reports/extra-recheck.json`). The original 16/18 score is preserved. Prior experiments,
-including quota-blocked model comparisons, are historical and do not establish current
-accuracy. The current application remains on Flash-Lite.
+The initial full audit, `reports/final-audit-2026-11-07.json`, passed **17/18**:
+9/10 required and 8/8 extra questions. Median latency was **1.49 seconds**. The miss
+was unnecessary clarification of a uniquely matching shortened portfolio name.
 
-## Interpretation and limits
+The next required-question run, `reports/release-required-2026-11-07.json`, passed
+9/10. A repaired SQL query incorrectly excluded bonds from a market-value denominator.
+The planner now explicitly describes the schema's nullable sector relationship and
+requires preserving all holdings in total-value calculations. The name-resolution
+instructions also clarify unique whole-word matches. Neither correction changes data,
+expected results or comparison tolerances.
 
-These are development examples, not a blind test set. Passing them does not guarantee
-accuracy on unseen questions. Provider latency, quotas and availability remain external
-constraints. Errors are displayed rather than replaced with invented financial answers.
-The documented sector-market-value cohort and diversification conventions follow the
-supplied reference. Numerical answers and summaries come from tools, not model arithmetic.
+The final full run, `reports/release-final-2026-11-07.json`, passed **18/18**: all
+**10 supplied questions** and **8 additional cases**, with no provider failures. Median
+latency was **2.64 seconds** per answer on this run. This is a
+recorded development result, not a guarantee for every future question.
 
-This is an independent portfolio analytics project built with supplied historical sample
-data. It is not an official PL Capital service, live market feed or investment adviser.
-Private GitHub publication is separate from deploying a public application.
+Earlier development reports are under `reports/archive/`. Failed runs remain available;
+they are not relabelled as passes.
+
+## Limits
+
+These are development cases, not unseen holdout questions. Results can vary between
+requests. Provider quotas, latency and outages remain external constraints. Errors are
+shown rather than substituted with fabricated answers. The reference-specific sector
+cohort and diversification conventions are documented in `docs/METHODOLOGY.md`.
+
+Windows/Python 3.13 is verified locally. macOS/Linux commands are documented, not locally
+tested. Original code/documentation is MIT licensed; supplied materials and third-party
+assets are explicitly excluded. The PL Capital mark identifies assessment context, not
+official endorsement. GitHub publication does not deploy a public service.

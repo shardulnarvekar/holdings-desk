@@ -1,0 +1,1381 @@
+{
+  "created_at_utc": "2026-11-07T17:28:15.139713+00:00",
+  "dataset_sha256": "2bb7787cd86254cbeeb678193f72f22674d90c1ce89d31f303269b9acdae3778",
+  "mode": "live_gemini",
+  "model": "gemini-3.5-flash-lite",
+  "results": [
+    {
+      "id": 1,
+      "question": "How many portfolios do we have in total?",
+      "difficulty": "easy",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "COUNT(*)"
+      ],
+      "expected_rows": [
+        [
+          13
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "How many portfolios do we have in total?",
+        "status": "ok",
+        "message": "COUNT(*): 13",
+        "tool": "sql_query",
+        "columns": [
+          "COUNT(*)"
+        ],
+        "rows": [
+          [
+            13
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT COUNT(*) FROM portfolios",
+          "parameters": {},
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1718.27,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 2,
+      "question": "What are the names of all active portfolios?",
+      "difficulty": "easy",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "portfolio_name"
+      ],
+      "expected_rows": [
+        [
+          "Growth Equity Fund"
+        ],
+        [
+          "Conservative Income Fund"
+        ],
+        [
+          "Tech Innovation Fund"
+        ],
+        [
+          "Balanced Portfolio"
+        ],
+        [
+          "ESG Sustainable Fund"
+        ],
+        [
+          "Small Cap Value Fund"
+        ],
+        [
+          "International Equity Fund"
+        ],
+        [
+          "Fixed Income Plus"
+        ],
+        [
+          "Dividend Aristocrats Fund"
+        ],
+        [
+          "Emerging Markets Fund"
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "What are the names of all active portfolios?",
+        "status": "ok",
+        "message": "Found 10 results for portfolio name: Balanced Portfolio, Conservative Income Fund, Dividend Aristocrats Fund, and 7 more.",
+        "tool": "sql_query",
+        "columns": [
+          "portfolio_name"
+        ],
+        "rows": [
+          [
+            "Balanced Portfolio"
+          ],
+          [
+            "Conservative Income Fund"
+          ],
+          [
+            "Dividend Aristocrats Fund"
+          ],
+          [
+            "ESG Sustainable Fund"
+          ],
+          [
+            "Emerging Markets Fund"
+          ],
+          [
+            "Fixed Income Plus"
+          ],
+          [
+            "Growth Equity Fund"
+          ],
+          [
+            "International Equity Fund"
+          ],
+          [
+            "Small Cap Value Fund"
+          ],
+          [
+            "Tech Innovation Fund"
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT portfolio_name FROM portfolios WHERE status = :status ORDER BY portfolio_name",
+          "parameters": {
+            "status": "Active"
+          },
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1180.67,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 3,
+      "question": "Which securities are in the Technology sector?",
+      "difficulty": "easy",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "symbol",
+        "company_name"
+      ],
+      "expected_rows": [
+        [
+          "AAPL",
+          "Apple Inc."
+        ],
+        [
+          "MSFT",
+          "Microsoft Corporation"
+        ],
+        [
+          "GOOGL",
+          "Alphabet Inc."
+        ],
+        [
+          "META",
+          "Meta Platforms Inc."
+        ],
+        [
+          "NVDA",
+          "NVIDIA Corporation"
+        ],
+        [
+          "AVGO",
+          "Broadcom Inc."
+        ],
+        [
+          "CRM",
+          "Salesforce Inc."
+        ],
+        [
+          "ORCL",
+          "Oracle Corporation"
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "Which securities are in the Technology sector?",
+        "status": "ok",
+        "message": "Showing 8 records with symbol, company name.",
+        "tool": "sql_query",
+        "columns": [
+          "symbol",
+          "company_name"
+        ],
+        "rows": [
+          [
+            "AAPL",
+            "Apple Inc."
+          ],
+          [
+            "AVGO",
+            "Broadcom Inc."
+          ],
+          [
+            "CRM",
+            "Salesforce Inc."
+          ],
+          [
+            "GOOGL",
+            "Alphabet Inc."
+          ],
+          [
+            "META",
+            "Meta Platforms Inc."
+          ],
+          [
+            "MSFT",
+            "Microsoft Corporation"
+          ],
+          [
+            "NVDA",
+            "NVIDIA Corporation"
+          ],
+          [
+            "ORCL",
+            "Oracle Corporation"
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT T1.symbol, T1.company_name FROM securities AS T1 JOIN sectors AS T2 ON T1.sector_id = T2.sector_id WHERE T2.sector_name = :sector_name ORDER BY T1.symbol",
+          "parameters": {
+            "sector_name": "Technology"
+          },
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1192.9,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 4,
+      "question": "What is the total Assets Under Management (AUM) for portfolios with high target risk level?",
+      "difficulty": "medium",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "SUM(total_aum)"
+      ],
+      "expected_rows": [
+        [
+          85000000.0
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "positional_alias_tolerant",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "What is the total Assets Under Management (AUM) for portfolios with high target risk level?",
+        "status": "ok",
+        "message": "total aum: 85,000,000",
+        "tool": "sql_query",
+        "columns": [
+          "total_aum"
+        ],
+        "rows": [
+          [
+            85000000.0
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT SUM(total_aum) AS total_aum FROM portfolios WHERE target_risk_level = :target_risk_level",
+          "parameters": {
+            "target_risk_level": "High"
+          },
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1409.64,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 5,
+      "question": "Show me the top 5 holdings by cost basis in the Growth Equity Fund",
+      "difficulty": "medium",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "holding_id",
+        "symbol",
+        "company_name",
+        "quantity",
+        "cost_basis"
+      ],
+      "expected_rows": [
+        [
+          1,
+          "AAPL",
+          "Apple Inc.",
+          2500.0,
+          438000.0
+        ],
+        [
+          8,
+          "AMZN",
+          "Amazon.com Inc.",
+          100.0,
+          320000.0
+        ],
+        [
+          2,
+          "MSFT",
+          "Microsoft Corporation",
+          800.0,
+          304400.0
+        ],
+        [
+          3,
+          "NVDA",
+          "NVIDIA Corporation",
+          400.0,
+          288040.0
+        ],
+        [
+          6,
+          "CRM",
+          "Salesforce Inc.",
+          1000.0,
+          185400.0
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": true,
+      "actual": {
+        "question": "Show me the top 5 holdings by cost basis in the Growth Equity Fund",
+        "status": "ok",
+        "message": "Showing 5 records with holding id, symbol, company name, quantity, and additional fields.",
+        "tool": "sql_query",
+        "columns": [
+          "holding_id",
+          "symbol",
+          "company_name",
+          "quantity",
+          "cost_basis"
+        ],
+        "rows": [
+          [
+            1,
+            "AAPL",
+            "Apple Inc.",
+            2500.0,
+            438000.0
+          ],
+          [
+            8,
+            "AMZN",
+            "Amazon.com Inc.",
+            100.0,
+            320000.0
+          ],
+          [
+            2,
+            "MSFT",
+            "Microsoft Corporation",
+            800.0,
+            304400.0
+          ],
+          [
+            3,
+            "NVDA",
+            "NVIDIA Corporation",
+            400.0,
+            288040.0
+          ],
+          [
+            6,
+            "CRM",
+            "Salesforce Inc.",
+            1000.0,
+            185400.0
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT h.holding_id, s.symbol, s.company_name, h.quantity, h.cost_basis FROM holdings h JOIN securities s ON h.security_id = s.security_id JOIN portfolios p ON h.portfolio_id = p.portfolio_id WHERE p.portfolio_name = :portfolio_name ORDER BY h.cost_basis DESC LIMIT 5",
+          "parameters": {
+            "portfolio_name": "Growth Equity Fund"
+          },
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1381.37,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 6,
+      "question": "What is the average current price of securities in each sector?",
+      "difficulty": "medium",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "sector_name",
+        "avg_price"
+      ],
+      "expected_rows": [
+        [
+          "Consumer Discretionary",
+          3380.0
+        ],
+        [
+          "Technology",
+          719.245
+        ],
+        [
+          "Healthcare",
+          285.17
+        ],
+        [
+          "Automotive",
+          248.5
+        ],
+        [
+          "Financials",
+          201.2125
+        ],
+        [
+          "Consumer Staples",
+          173.8625
+        ],
+        [
+          "Energy",
+          128.575
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "positional_alias_tolerant",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "What is the average current price of securities in each sector?",
+        "status": "ok",
+        "message": "Showing 7 records with sector name, average current price.",
+        "tool": "sql_query",
+        "columns": [
+          "sector_name",
+          "average_current_price"
+        ],
+        "rows": [
+          [
+            "Automotive",
+            248.5
+          ],
+          [
+            "Consumer Discretionary",
+            3380.0
+          ],
+          [
+            "Consumer Staples",
+            173.8625
+          ],
+          [
+            "Energy",
+            128.575
+          ],
+          [
+            "Financials",
+            201.2125
+          ],
+          [
+            "Healthcare",
+            285.17
+          ],
+          [
+            "Technology",
+            719.245
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT s.sector_name, AVG(sec.current_price) AS average_current_price FROM sectors s JOIN securities sec ON s.sector_id = sec.sector_id GROUP BY s.sector_name ORDER BY s.sector_name",
+          "parameters": {},
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1572.57,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 7,
+      "question": "For each portfolio, show the total value of Technology sector holdings and what percentage it represents of the total portfolio value",
+      "difficulty": "hard",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "portfolio_name",
+        "tech_value",
+        "total_value",
+        "tech_percentage"
+      ],
+      "expected_rows": [
+        [
+          "Tech Innovation Fund",
+          1565292.5,
+          1565292.5,
+          100.0
+        ],
+        [
+          "Growth Equity Fund",
+          1866148.0,
+          2204148.0,
+          84.67
+        ],
+        [
+          "Total International Index Fund",
+          1427086.0,
+          2281686.0,
+          62.55
+        ],
+        [
+          "International Equity Fund",
+          346888.0,
+          734928.0,
+          47.2
+        ],
+        [
+          "Total Stock Market Index Fund",
+          3093520.0,
+          6622340.0,
+          46.71
+        ],
+        [
+          "Balanced Portfolio",
+          388704.0,
+          1073279.0,
+          36.22
+        ],
+        [
+          "Emerging Markets Fund",
+          339095.0,
+          1045100.0,
+          32.45
+        ],
+        [
+          "ESG Sustainable Fund",
+          272978.0,
+          1007228.0,
+          27.1
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "For each portfolio, show the total value of Technology sector holdings and what percentage it represents of the total portfolio value",
+        "status": "ok",
+        "message": "Showing 8 records with portfolio name, tech value, total value, tech percentage.",
+        "tool": "sql_query",
+        "columns": [
+          "portfolio_name",
+          "tech_value",
+          "total_value",
+          "tech_percentage"
+        ],
+        "rows": [
+          [
+            "Tech Innovation Fund",
+            1565292.5,
+            1565292.5,
+            100.0
+          ],
+          [
+            "Growth Equity Fund",
+            1866148.0,
+            2204148.0,
+            84.67
+          ],
+          [
+            "Total International Index Fund",
+            1427086.0,
+            2281686.0,
+            62.55
+          ],
+          [
+            "International Equity Fund",
+            346888.0,
+            734928.0,
+            47.2
+          ],
+          [
+            "Total Stock Market Index Fund",
+            3093520.0,
+            6622340.0,
+            46.71
+          ],
+          [
+            "Balanced Portfolio",
+            388704.0,
+            1073279.0,
+            36.22
+          ],
+          [
+            "Emerging Markets Fund",
+            339095.0,
+            1045100.0,
+            32.45
+          ],
+          [
+            "ESG Sustainable Fund",
+            272978.0,
+            1007228.0,
+            27.1
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT p.portfolio_name, SUM(CASE WHEN s.sector_id = (SELECT sector_id FROM sectors WHERE sector_name = 'Technology') THEN h.quantity * s.current_price ELSE 0 END) AS tech_value, SUM(h.quantity * s.current_price) AS total_value, ROUND(SUM(CASE WHEN s.sector_id = (SELECT sector_id FROM sectors WHERE sector_name = 'Technology') THEN h.quantity * s.current_price ELSE 0 END) * 100.0 / SUM(h.quantity * s.current_price), 2) AS tech_percentage FROM portfolios p JOIN holdings h ON p.portfolio_id = h.portfolio_id JOIN securities s ON h.security_id = s.security_id WHERE EXISTS (SELECT 1 FROM holdings h2 JOIN securities s2 ON h2.security_id = s2.security_id WHERE h2.portfolio_id = p.portfolio_id AND s2.sector_id = (SELECT sector_id FROM sectors WHERE sector_name = 'Technology')) GROUP BY p.portfolio_id, p.portfolio_name ORDER BY tech_percentage DESC;",
+          "parameters": {},
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1927.29,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 8,
+      "question": "Find portfolios that have holdings in more than 5 different sectors and show their diversification metrics",
+      "difficulty": "hard",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "portfolio_name",
+        "sector_count",
+        "total_holdings",
+        "diversification_ratio"
+      ],
+      "expected_rows": [
+        [
+          "Total Stock Market Index Fund",
+          6,
+          12,
+          0.5
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "Find portfolios that have holdings in more than 5 different sectors and show their diversification metrics",
+        "status": "ok",
+        "message": "portfolio name: Total Stock Market Index Fund; sector count: 6; total holdings: 12; diversification ratio: 0.5",
+        "tool": "sql_query",
+        "columns": [
+          "portfolio_name",
+          "sector_count",
+          "total_holdings",
+          "diversification_ratio"
+        ],
+        "rows": [
+          [
+            "Total Stock Market Index Fund",
+            6,
+            12,
+            0.5
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT p.portfolio_name, COUNT(DISTINCT s.sector_id) AS sector_count, COUNT(h.holding_id) AS total_holdings, ROUND(CAST(COUNT(DISTINCT s.sector_id) AS REAL) / COUNT(h.holding_id), 3) AS diversification_ratio FROM portfolios p JOIN holdings h ON p.portfolio_id = h.portfolio_id JOIN securities sec ON h.security_id = sec.security_id LEFT JOIN sectors s ON sec.sector_id = s.sector_id GROUP BY p.portfolio_id, p.portfolio_name HAVING COUNT(DISTINCT s.sector_id) > 5 ORDER BY diversification_ratio DESC",
+          "parameters": {},
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1702.26,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 9,
+      "question": "What are the sector exposures for the Tech Innovation Fund?",
+      "difficulty": "medium",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "expected_rows": [
+        [
+          "Technology",
+          100.0
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "What are the sector exposures for the Tech Innovation Fund?",
+        "status": "ok",
+        "message": "Tech Innovation Fund: Technology is the largest sector at 100% of the supplied portfolio weights.",
+        "tool": "exposure_calculator",
+        "columns": [
+          "sector",
+          "exposure_pct"
+        ],
+        "rows": [
+          [
+            "Technology",
+            100.0
+          ]
+        ],
+        "evidence": {
+          "portfolio_name": "Tech Innovation Fund",
+          "basis": "portfolio",
+          "columns": [
+            "sector",
+            "exposure_pct"
+          ],
+          "rows": [
+            [
+              "Technology",
+              100.0
+            ]
+          ],
+          "equity_weight_pct": 100.0,
+          "excluded_bond_weight_pct": 0.0,
+          "total_weight_pct": 100.0,
+          "warnings": [],
+          "formula": "100 \u00d7 sum(stock current_weight in sector)"
+        },
+        "warnings": [],
+        "elapsed_ms": 1490.77,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 10,
+      "question": "Calculate the sector exposure breakdown for international equity",
+      "difficulty": "medium",
+      "passed": false,
+      "tool_correct": false,
+      "values_correct": false,
+      "expected_columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "expected_rows": [
+        [
+          "Technology",
+          36.0
+        ],
+        [
+          "Automotive",
+          15.0
+        ],
+        [
+          "Energy",
+          38.0
+        ],
+        [
+          "Consumer Staples",
+          11.0
+        ]
+      ],
+      "strict_shape_match": false,
+      "comparison": "incompatible_columns",
+      "failure_category": "tool_selection",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "Calculate the sector exposure breakdown for international equity",
+        "status": "clarification",
+        "message": "Could you please specify which exact portfolio you mean by 'international equity' (e.g., International Equity Fund or Total International Index Fund) and whether you want weight-based exposure or market-value breakdown?",
+        "tool": "clarify",
+        "columns": [],
+        "rows": [],
+        "evidence": {},
+        "warnings": [],
+        "elapsed_ms": 1514.93,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 101,
+      "question": "How many funds are marked Passive?",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "COUNT(*)"
+      ],
+      "expected_rows": [
+        [
+          3
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "How many funds are marked Passive?",
+        "status": "ok",
+        "message": "COUNT(*): 3",
+        "tool": "sql_query",
+        "columns": [
+          "COUNT(*)"
+        ],
+        "rows": [
+          [
+            3
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT COUNT(*) FROM portfolios WHERE status = :status",
+          "parameters": {
+            "status": "Passive"
+          },
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1493.17,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 102,
+      "question": "List portfolio names with AUM above 30 million, from highest AUM to lowest.",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "portfolio_name"
+      ],
+      "expected_rows": [
+        [
+          "Total Stock Market Index Fund"
+        ],
+        [
+          "Fixed Income Plus"
+        ],
+        [
+          "Tech Innovation Fund"
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": true,
+      "actual": {
+        "question": "List portfolio names with AUM above 30 million, from highest AUM to lowest.",
+        "status": "ok",
+        "message": "Found 3 results for portfolio name: Total Stock Market Index Fund, Fixed Income Plus, Tech Innovation Fund.",
+        "tool": "sql_query",
+        "columns": [
+          "portfolio_name"
+        ],
+        "rows": [
+          [
+            "Total Stock Market Index Fund"
+          ],
+          [
+            "Fixed Income Plus"
+          ],
+          [
+            "Tech Innovation Fund"
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT portfolio_name FROM portfolios WHERE total_aum > :threshold ORDER BY total_aum DESC",
+          "parameters": {
+            "threshold": 30000000.0
+          },
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1953.36,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 103,
+      "question": "Break down the balanced portfolio by stock sector using its supplied portfolio weights.",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "expected_rows": [
+        [
+          "Technology",
+          22.0
+        ],
+        [
+          "Financials",
+          8.0
+        ],
+        [
+          "Healthcare",
+          6.0
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "Break down the balanced portfolio by stock sector using its supplied portfolio weights.",
+        "status": "ok",
+        "message": "Balanced Portfolio: Technology is the largest sector at 22% of the supplied portfolio weights.",
+        "tool": "exposure_calculator",
+        "columns": [
+          "sector",
+          "exposure_pct"
+        ],
+        "rows": [
+          [
+            "Technology",
+            22.0
+          ],
+          [
+            "Financials",
+            8.0
+          ],
+          [
+            "Healthcare",
+            6.0
+          ]
+        ],
+        "evidence": {
+          "portfolio_name": "Balanced Portfolio",
+          "basis": "portfolio",
+          "columns": [
+            "sector",
+            "exposure_pct"
+          ],
+          "rows": [
+            [
+              "Technology",
+              22.0
+            ],
+            [
+              "Financials",
+              8.0
+            ],
+            [
+              "Healthcare",
+              6.0
+            ]
+          ],
+          "equity_weight_pct": 36.0,
+          "excluded_bond_weight_pct": 64.0,
+          "total_weight_pct": 100.0,
+          "warnings": [],
+          "formula": "100 \u00d7 sum(stock current_weight in sector)"
+        },
+        "warnings": [],
+        "elapsed_ms": 1256.84,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 104,
+      "question": "What is the sector exposure of Fixed Income Plus?",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "expected_rows": [],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "What is the sector exposure of Fixed Income Plus?",
+        "status": "ok",
+        "message": "Fixed Income Plus has no equity sector exposure to report.",
+        "tool": "exposure_calculator",
+        "columns": [
+          "sector",
+          "exposure_pct"
+        ],
+        "rows": [],
+        "evidence": {
+          "portfolio_name": "Fixed Income Plus",
+          "basis": "portfolio",
+          "columns": [
+            "sector",
+            "exposure_pct"
+          ],
+          "rows": [],
+          "equity_weight_pct": 0.0,
+          "excluded_bond_weight_pct": 100.0,
+          "total_weight_pct": 100.0,
+          "warnings": [
+            "No equity holdings. Sector exposure is not applicable; bonds are excluded."
+          ],
+          "formula": "100 \u00d7 sum(stock current_weight in sector)"
+        },
+        "warnings": [
+          "No equity holdings. Sector exposure is not applicable; bonds are excluded."
+        ],
+        "elapsed_ms": 1191.57,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 105,
+      "question": "Show sector allocations for Total Stock Market Index Fund.",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "expected_rows": [
+        [
+          "Technology",
+          48.0
+        ],
+        [
+          "Consumer Discretionary",
+          10.0
+        ],
+        [
+          "Automotive",
+          6.0
+        ],
+        [
+          "Financials",
+          14.000000000000002
+        ],
+        [
+          "Healthcare",
+          16.0
+        ],
+        [
+          "Consumer Staples",
+          4.0
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "Show sector allocations for Total Stock Market Index Fund.",
+        "status": "ok",
+        "message": "Total Stock Market Index Fund: Technology is the largest sector at 48% of the supplied portfolio weights.",
+        "tool": "exposure_calculator",
+        "columns": [
+          "sector",
+          "exposure_pct"
+        ],
+        "rows": [
+          [
+            "Technology",
+            48.0
+          ],
+          [
+            "Healthcare",
+            16.0
+          ],
+          [
+            "Financials",
+            14.0
+          ],
+          [
+            "Consumer Discretionary",
+            10.0
+          ],
+          [
+            "Automotive",
+            6.0
+          ],
+          [
+            "Consumer Staples",
+            4.0
+          ]
+        ],
+        "evidence": {
+          "portfolio_name": "Total Stock Market Index Fund",
+          "basis": "portfolio",
+          "columns": [
+            "sector",
+            "exposure_pct"
+          ],
+          "rows": [
+            [
+              "Technology",
+              48.0
+            ],
+            [
+              "Healthcare",
+              16.0
+            ],
+            [
+              "Financials",
+              14.0
+            ],
+            [
+              "Consumer Discretionary",
+              10.0
+            ],
+            [
+              "Automotive",
+              6.0
+            ],
+            [
+              "Consumer Staples",
+              4.0
+            ]
+          ],
+          "equity_weight_pct": 98.0,
+          "excluded_bond_weight_pct": 0.0,
+          "total_weight_pct": 98.0,
+          "warnings": [
+            "Supplied holding weights total 98.00%. The difference is not assumed to be cash."
+          ],
+          "formula": "100 \u00d7 sum(stock current_weight in sector)"
+        },
+        "warnings": [
+          "Supplied holding weights total 98.00%. The difference is not assumed to be cash."
+        ],
+        "elapsed_ms": 1608.19,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 106,
+      "question": "How many securities are bonds?",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "COUNT(*)"
+      ],
+      "expected_rows": [
+        [
+          5
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "How many securities are bonds?",
+        "status": "ok",
+        "message": "COUNT(*): 5",
+        "tool": "sql_query",
+        "columns": [
+          "COUNT(*)"
+        ],
+        "rows": [
+          [
+            5
+          ]
+        ],
+        "evidence": {
+          "sql": "SELECT COUNT(*) FROM securities WHERE asset_type = 'Bond'",
+          "parameters": {},
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1510.3,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 107,
+      "question": "List the names of portfolios whose recorded AUM exceeds one billion.",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "portfolio_name"
+      ],
+      "expected_rows": [],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "List the names of portfolios whose recorded AUM exceeds one billion.",
+        "status": "ok",
+        "message": "No matching records were found in the supplied dataset.",
+        "tool": "sql_query",
+        "columns": [
+          "portfolio_name"
+        ],
+        "rows": [],
+        "evidence": {
+          "sql": "SELECT portfolio_name FROM portfolios WHERE total_aum > :threshold ORDER BY portfolio_name",
+          "parameters": {
+            "threshold": 1000000000
+          },
+          "truncated": false
+        },
+        "warnings": [],
+        "elapsed_ms": 1120.84,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    },
+    {
+      "id": 108,
+      "question": "How is international equity distributed across sectors?",
+      "difficulty": "extra",
+      "passed": true,
+      "tool_correct": true,
+      "values_correct": true,
+      "expected_columns": [
+        "sector",
+        "exposure_pct"
+      ],
+      "expected_rows": [
+        [
+          "Technology",
+          36.0
+        ],
+        [
+          "Automotive",
+          15.0
+        ],
+        [
+          "Energy",
+          38.0
+        ],
+        [
+          "Consumer Staples",
+          11.0
+        ]
+      ],
+      "strict_shape_match": true,
+      "comparison": "named_projection",
+      "failure_category": "",
+      "ordered_comparison": false,
+      "actual": {
+        "question": "How is international equity distributed across sectors?",
+        "status": "ok",
+        "message": "International Equity Fund: Energy is the largest sector at 38% of the supplied portfolio weights.",
+        "tool": "exposure_calculator",
+        "columns": [
+          "sector",
+          "exposure_pct"
+        ],
+        "rows": [
+          [
+            "Energy",
+            38.0
+          ],
+          [
+            "Technology",
+            36.0
+          ],
+          [
+            "Automotive",
+            15.0
+          ],
+          [
+            "Consumer Staples",
+            11.0
+          ]
+        ],
+        "evidence": {
+          "portfolio_name": "International Equity Fund",
+          "basis": "portfolio",
+          "columns": [
+            "sector",
+            "exposure_pct"
+          ],
+          "rows": [
+            [
+              "Energy",
+              38.0
+            ],
+            [
+              "Technology",
+              36.0
+            ],
+            [
+              "Automotive",
+              15.0
+            ],
+            [
+              "Consumer Staples",
+              11.0
+            ]
+          ],
+          "equity_weight_pct": 100.0,
+          "excluded_bond_weight_pct": 0.0,
+          "total_weight_pct": 100.0,
+          "warnings": [],
+          "formula": "100 \u00d7 sum(stock current_weight in sector)"
+        },
+        "warnings": [],
+        "elapsed_ms": 1130.58,
+        "backend": "gemini",
+        "error_code": ""
+      }
+    }
+  ],
+  "passed": 17,
+  "total": 18,
+  "accuracy": 0.9444444444444444,
+  "tool_accuracy": 0.9444444444444444,
+  "provider_failures": 0,
+  "skipped": 0,
+  "status": "completed",
+  "request_delay_seconds": 15.0,
+  "attempted": 18,
+  "median_latency_ms": 1491.97,
+  "by_difficulty": {
+    "easy": {
+      "passed": 3,
+      "total": 3
+    },
+    "extra": {
+      "passed": 8,
+      "total": 8
+    },
+    "hard": {
+      "passed": 2,
+      "total": 2
+    },
+    "medium": {
+      "passed": 4,
+      "total": 5
+    }
+  }
+}
