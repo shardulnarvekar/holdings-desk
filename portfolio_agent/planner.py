@@ -3,6 +3,7 @@ import json
 import os
 from typing import Protocol
 from dotenv import load_dotenv
+from pydantic import ValidationError
 from .database import ROOT, Database
 from .models import AnalyticsError, ProviderError, Plan
 
@@ -19,6 +20,8 @@ exposure_calculator: portfolio_name and basis; use for sector exposure based on 
 hybrid: SQL selects ONLY portfolio_name for a set of portfolios, then the calculator
 computes exposures for each. Optional sector filters the comparison; top_n ranks that
 sector descending. Use hybrid for comparing/ranking weight-based exposures across funds.
+A hybrid plan MUST include nonempty SQL selecting portfolio_name with the requested
+filters. sector and top_n do not replace SQL; they apply after the calculator runs.
 clarify: a concise question/explanation in clarification. Never guess an unknown fund.
 PORTFOLIO RESOLUTION: compare names case-insensitively as whole words. A shortened
 name is sufficient when ALL its words occur in exactly one recorded portfolio name.
@@ -111,17 +114,38 @@ class GeminiPlanner:
             ),
         })
         try:
-            response = self.client.models.generate_content(
-                model=self.model, contents=contents,
-                config=types.GenerateContentConfig(
-                    system_instruction=self.context,
-                    response_mime_type="application/json",
-                    response_json_schema=Plan.model_json_schema(),
-                    temperature=0,
-                    max_output_tokens=4096,
-                ),
-            )
-            return Plan.model_validate_json(response.text or "")
+            for attempt in range(2):
+                response = self.client.models.generate_content(
+                    model=self.model, contents=contents,
+                    config=types.GenerateContentConfig(
+                        system_instruction=self.context,
+                        response_mime_type="application/json",
+                        response_json_schema=Plan.model_json_schema(),
+                        temperature=0,
+                        max_output_tokens=4096,
+                    ),
+                )
+                try:
+                    return Plan.model_validate_json(response.text or "")
+                except ValidationError as exc:
+                    if attempt == 1:
+                        raise ProviderError(
+                            "Gemini returned an incomplete or invalid tool plan after one correction attempt. "
+                            "No calculation was executed. Please restate the question or try again.",
+                            "invalid_plan",
+                        ) from exc
+                    # Only validation metadata is sent back; never exception input or credentials.
+                    problems = exc.errors(include_input=False, include_context=False, include_url=False)
+                    correction = json.loads(contents)
+                    correction["plan_validation_errors"] = problems
+                    correction["correction_instruction"] = (
+                        "Return a complete corrected plan for the original question. "
+                        "sql_query and hybrid require nonempty SQL. Hybrid SQL selects portfolio_name; "
+                        "the calculator handles sector exposure and top_n ranking."
+                    )
+                    contents = json.dumps(correction)
+        except ProviderError:
+            raise
         except Exception as exc:
             # Do not put provider exception text in UI/logs: it may contain request details.
             code = getattr(exc, "code", None)

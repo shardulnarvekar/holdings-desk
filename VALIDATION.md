@@ -73,3 +73,16 @@ Windows/Python 3.11 and 3.13 are verified locally. macOS/Linux commands are docu
 tested. Original code/documentation is MIT licensed; supplied materials and third-party
 assets are explicitly excluded. The PL Capital mark identifies assessment context, not
 official endorsement. GitHub publication does not deploy a public service.
+
+
+## Incomplete-plan fix — 8 November 2026
+
+A repeated live comparison question returned a hybrid plan without SQL. Authentication
+was working; the old generic message incorrectly suggested connectivity. The planner
+now emphasizes the required hybrid selection SQL and makes at most one correction
+attempt for invalid plan structure. Authentication failures are not retried by this
+correction path. If correction fails, the message identifies an invalid plan and no
+calculation executes. All 51 automated tests passed on the development Python 3.13
+environment. The originally failing question passed live in the Python 3.11 test copy:
+Tech Innovation Fund, 100% Technology exposure, 1.50 seconds. This targeted recheck
+is separate from the earlier full 18-case evaluation.

@@ -95,7 +95,7 @@ it is not AI and is never counted as model evaluation.
 
 The first two checks need no key. Reference checking validates expected data, **not AI accuracy**.
 Live evaluation runs the 10 supplied questions. Add `--extra` for 8 additional development cases,
-or `--ids 7` for one case. Each live question uses API quota; SQL repair/server retries may add calls.
+or `--ids 7` for one case. Each live question uses API quota; One invalid-plan correction, SQL repair and server retries may add calls.
 The default 15-second pause between questions reduces request pressure. Daily quota/authentication
 failures stop the run; checkpoints preserve completed results. Exit codes: 0 pass, 1 failed cases,
 2 setup/reference error. See [current results and limits](VALIDATION.md).
