@@ -19,13 +19,25 @@ No database server, Docker, Node.js or manual CSV import is needed.
 
 ### 1. Get the project
 
+**Option A - Git clone:**
+
 ```sh
 git clone https://github.com/shardulnarvekar/holdings-desk.git
 cd holdings-desk
 ```
 
-Alternatively, choose **Code → Download ZIP** on GitHub, extract the ZIP, and open a terminal
-in the folder containing `setup_project.py`.
+**Option B - Download ZIP (including the submitted ZIP):**
+
+Extract the ZIP. GitHub names the project folder **`holdings-desk-main`**.
+Open a terminal in the extracted parent folder and run:
+
+```sh
+cd holdings-desk-main
+```
+
+Choose either option, not both. Before continuing, your terminal must be inside the
+folder containing `setup_project.py`. Cloning uses `holdings-desk`; ZIP extraction
+uses `holdings-desk-main`.
 
 ### 2. Install and configure
 
